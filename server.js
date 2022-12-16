@@ -18,7 +18,11 @@ io.on('connection',(socket) => {
    socket.on('message',(msg)=>{
     socket.broadcast.emit('message',msg)
    })
+
+   ;
 })
+
+
 
 
 http.listen(PORT, () => {
