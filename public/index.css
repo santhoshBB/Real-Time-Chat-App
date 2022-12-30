@@ -1,0 +1,66 @@
+body{
+    padding: 10px;
+}
+#mainArea{
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 390px;
+    height: 90vh;
+    margin: auto;
+}
+#brand{
+    background: black;
+    color: white;
+    padding: 10px;
+}
+#messageArea{
+    padding: 20px;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+}
+.text{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-size: 16px;
+    outline: none;
+    background: #FBFBFB;
+    box-sizing: border-box;
+}
+
+#messageArea .outgoing h6{
+    background: rgb(42, 44, 44);
+    width: fit-content;
+    /* pushes content to extreme right margin-left=auto*/
+    margin-left: auto;
+    padding: 10px;
+    border-radius: 10px;
+    color: #d1d1d1;
+    box-shadow: 1px 1px 1px 1px #6e6e6d;
+}
+#messageArea .incoming h6{
+    padding: 10px;
+    background: #eae7e3;
+    width: fit-content;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin: 10px;
+}
+
+#messageArea h6 sub{
+    float: right;
+    padding: 8px 0px 2px 8px
+} 
+
+h5{
+    display: inline-block;
+    padding-left: 10px;
+}
+img{
+    height: 20px;
+    width: 20px;
+    padding-left: 8px;
+}

@@ -1,69 +1,62 @@
-const socket= io();
-let textarea= document.getElementById("textarea")
-let messageArea= document.getElementById("msgarea")
 
+const socket= io();
+let textarea= document.querySelector('.text');
+let messageArea = document.querySelector('#messageArea');
 
 let user;
 do {
-    user= prompt("Please enter your name to chat ")
+   user= prompt('Enter your name:')
 } while (!user);
 
 textarea.addEventListener('keyup', (e) => {
-    var message= e.target.value
-     if(e.key === 'Enter' ){
-        sendMessage(message)
-     }  
-
-    
+     if(e.key === 'Enter'){
+        sendMessage(e.target.value)
+     }
 })
 
-sendMessage(`Hello ${user} welcome to Live chat room`)
-
-
-
-
-
-
-//auto scroll to bottom
-function updateScroll(){
-    var element = document.getElementById("msgarea");
-    element.scrollTop = element.scrollHeight;
-}
 
 
 function sendMessage(message){
     let d= new Date()
     const time= `${d.getHours()}:${d.getMinutes()}`
     let msg ={
-        user:user,
+        user: user,
         message:message,
         time:time
     }
 
-    appendMessage(msg, "outgoing")
-    // textarea.value=''
-   
-    socket.emit('message',msg )
-   
+    //appending on dom
+
+    appendMessage(msg, 'outgoing')
+    textarea.value=''
+
+    // send to server side
+     socket.emit('message', msg)
+
 }
+
 
 function appendMessage(msg, type) {
     
-    let mainDiv= document.createElement('div')
-    let className= type
-    mainDiv.classList.add(className, 'message')
-    let markUp=` 
-    <h6>${msg.user}~</h6>
-    <p>${msg.message} <sub>${msg.time}</sub></p>
-    `
-    mainDiv.innerHTML=markUp
-    messageArea.appendChild(mainDiv)
-    // appending users
+    let mainDiv = document.createElement('div')
+    let className = type;
+    mainDiv.classList.add(className);
+    mainDiv.innerHTML = ` 
+    <h6>${msg.user}: ${msg.message} <sub>${msg.time}</sub></h6>`
+    messageArea.appendChild(mainDiv);
+
+
+    //scroll
     updateScroll();
 }
 
-//receiving the msg //by broadcast
-
-socket.on('message', (msg) => {
-     appendMessage(msg, "incoming")
+// receiving msgs that r broacasted ('incoming')
+socket.on('message',(msg) => {
+     appendMessage(msg, 'incoming')
 })
+
+
+//scroll to bottom
+function updateScroll(){
+    messageArea.scrollTop = messageArea.scrollHeight;
+}

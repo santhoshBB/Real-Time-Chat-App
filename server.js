@@ -1,30 +1,29 @@
-const express = require('express');
-const { Socket } = require('socket.io');
+const express= require('express');
 const app = express();
-const http= require('http').createServer(app)
-const PORT= process.env.PORT || 3000
+const http = require('http').createServer(app);
 
+const PORT = process.env.PORT || 3001
 
 app.use(express.static(__dirname + '/public'))
 
-app.get('/',(req,res) => {
+app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html')
 })
 
-
-const io= require('socket.io')(http)
-io.on('connection',(socket) => {
-   console.log("connected..") 
-   socket.on('message',(msg)=>{
-    socket.broadcast.emit('message',msg)
-   })
-
-   ;
+http.listen(PORT, ()=>{
+    console.log(`connected on port ${PORT}`);
 })
 
 
+//socket connection
+const io = require('socket.io')(http);
 
+io.on('connection',(socket) => {
+    console.log('a user connected') 
 
-http.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`) 
+    //listening emitted event from client side
+    socket.on('message',(msg) => {
+      //brodcast to all pages
+      socket.broadcast.emit('message',msg)
+    })
 })
